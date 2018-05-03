@@ -28,3 +28,7 @@ spec = do
     it "determines if a tree contains a value" $ do
      contains 5 (Leaf 5 (Leaf 3 Empty (Leaf 4 Empty Empty)) Empty) `shouldBe` True
      contains 9 (Leaf 5 (Leaf 3 Empty (Leaf 4 Empty Empty)) Empty) `shouldBe` False
+  describe "inOrder" $ do
+    it "sorts the list" $ do 
+      inOrder (Leaf 5 (Leaf 3 Empty (Leaf 4 Empty Empty)) Empty)
+      `shouldBe` [3,4,5] 
