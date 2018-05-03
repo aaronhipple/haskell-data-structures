@@ -1,3 +1,8 @@
 # data-structures
 
-add description of data-structures here
+## development
+
+```bash
+stack init
+stack test --fast --haddock-deps --file-watch
+```
