@@ -1,9 +1,13 @@
-module Data.Tree.BinarySpec (main, spec) where
+module Data.Tree.BinarySpec
+  ( main
+  , spec
+  ) where
 
-import Test.Hspec
-import Test.QuickCheck
+import           Test.Hspec
+import           Test.QuickCheck
 
-import Data.Tree.Binary
+import qualified Data.List
+import           Data.Tree.Binary
 
 -- `main` is here so that this module can be run from GHCi on its own.  It is
 -- not needed for automatic spec discovery.
@@ -23,8 +27,20 @@ spec = do
     it "inserts a greater item to the right" $ do
       insert 7 (Leaf 5 Empty Empty) `shouldBe` Leaf 5 Empty (Leaf 7 Empty Empty)
     it "recursively inserts an item" $ do
-      insert 4 (Leaf 5 (Leaf 3 Empty Empty) Empty) `shouldBe` Leaf 5 (Leaf 3 Empty (Leaf 4 Empty Empty)) Empty
+      insert 4 (Leaf 5 (Leaf 3 Empty Empty) Empty) `shouldBe`
+        Leaf 5 (Leaf 3 Empty (Leaf 4 Empty Empty)) Empty
   describe "contains" $ do
     it "determines if a tree contains a value" $ do
-     contains 5 (Leaf 5 (Leaf 3 Empty (Leaf 4 Empty Empty)) Empty) `shouldBe` True
-     contains 9 (Leaf 5 (Leaf 3 Empty (Leaf 4 Empty Empty)) Empty) `shouldBe` False
+      contains 5 (Leaf 5 (Leaf 3 Empty (Leaf 4 Empty Empty)) Empty) `shouldBe`
+        True
+      contains 9 (Leaf 5 (Leaf 3 Empty (Leaf 4 Empty Empty)) Empty) `shouldBe`
+        False
+  describe "inOrder" $ do
+    it "sorts the list" $
+      do inOrder (Leaf 5 (Leaf 3 Empty (Leaf 4 Empty Empty)) Empty)
+         `shouldBe` [3, 4, 5]
+  describe "sort" $ do
+    it "sorts the list" $ do sort [5, 2, 3] `shouldBe` [2, 3, 5]
+      -- let itSorts :: [Integer] -> Bool
+      --     itSorts xs = sort xs == Data.List.sort xs
+      -- in property itSorts
